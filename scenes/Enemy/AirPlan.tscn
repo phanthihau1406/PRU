@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://btwqtcioogxy0"]
+
+[ext_resource type="Texture2D" uid="uid://bikbrkxyar5gs" path="res://assets/sprites/enemy/mayBay-removebg-preview.png" id="1_ln6wt"]
+[ext_resource type="Script" path="res://scenes/Enemy/airplane.gd" id="2_script"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rybwn"]
+atlas = ExtResource("1_ln6wt")
+region = Rect2(0, 0, 166, 166)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qwss5"]
+atlas = ExtResource("1_ln6wt")
+region = Rect2(166, 0, 166, 166)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rpmen"]
+atlas = ExtResource("1_ln6wt")
+region = Rect2(0, 166, 166, 166)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sa3x7"]
+atlas = ExtResource("1_ln6wt")
+region = Rect2(332, 166, 166, 166)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ska2a"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rybwn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qwss5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rpmen")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sa3x7")
+}],
+"loop": true,
+"name": &"fly",
+"speed": 2.0
+}]
+
+[node name="Plan" type="Node2D" unique_id=1131624227]
+script = ExtResource("2_script")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1151393099]
+scale = Vector2(0.8, 0.8)
+sprite_frames = SubResource("SpriteFrames_ska2a")
+animation = &"fly"
