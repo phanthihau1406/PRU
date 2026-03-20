@@ -1,1 +1,6 @@
-res://scenes/story_screen.tscn
+res://scenes/Enemy/tenLua.tscn
+res://scenes/Enemy/tenLua.gd
+res://scenes/Enemy/enemy.gd
+res://scenes/level_1.tscn
+res://scripts/player.gd
+res://scenes/level_2.gd

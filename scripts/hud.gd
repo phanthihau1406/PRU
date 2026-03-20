@@ -7,7 +7,6 @@ extends CanvasLayer
 @onready var ammo_label = $MarginContainer/HBoxContainer/VBoxContainer/AmmoLabel
 @onready var ammo_bar = $MarginContainer/HBoxContainer/VBoxContainer/AmmoBar
 @onready var score_label = $MarginContainer/HBoxContainer/ScoreLabel
-@onready var lives_label = $MarginContainer/HBoxContainer/LivesLabel
 @onready var pause_menu = $PauseMenu
 @onready var pause_volume_slider = $PauseMenu/Panel/VBox/VolumeSlider
 @onready var pause_btn_resume = $PauseMenu/Panel/VBox/BtnResume
@@ -109,7 +108,6 @@ func update_hud():
 			hp_bar.value = player.health
 		
 		score_label.text = "Điểm: %06d" % GameManager.score
-		lives_label.text = "Mạng: %d" % GameManager.lives
 
 func _on_health_changed(new_health: int):
 	hp_bar.value = new_health

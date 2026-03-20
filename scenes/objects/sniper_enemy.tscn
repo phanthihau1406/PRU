@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene format=3 uid="uid://dvl274h8g0n1m"]
 
-[ext_resource type="Script" path="res://scripts/sniper_enemy.gd" id="1"]
+[ext_resource type="Script" uid="uid://dfcrbuvi6erf3" path="res://scripts/sniper_enemy.gd" id="1"]
 
-[node name="SniperEnemy" type="CharacterBody2D"]
+[node name="SniperEnemy" type="CharacterBody2D" unique_id=1764195145]
 script = ExtResource("1")

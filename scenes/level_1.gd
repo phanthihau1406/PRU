@@ -7,6 +7,9 @@ var hud_scene = preload("res://scenes/ui/hud.tscn")
 var hud: CanvasLayer
 var player: Node2D
 var rest_area_triggered: bool = false
+var can_interact_ally: bool = false
+var ally_interacted: bool = false
+var ally_label: Label = null
 
 func _setup_level_bgm(path: String = "res://assets/audio/game_background_music1.mp3", volume_db: float = -10.0):
 	var bgm = get_node_or_null("BGM")
@@ -30,7 +33,8 @@ func _setup_level_bgm(path: String = "res://assets/audio/game_background_music1.
 		bgm.play()
 
 func _ready():
-	_setup_level_bgm("res://assets/audio/game_background_music1.mp3", -10.0)
+	# Nhạc nền nhỏ
+	_setup_level_bgm("res://assets/audio/backgroundSound.mp3", -15.0)
 
 	# Find the player (placed in editor)
 	player = _find_node_by_type("CharacterBody2D", "player")
@@ -53,14 +57,24 @@ func _ready():
 	# Show level name
 	hud.show_message("RỪNG ĐIỆN BIÊN", 3.0)
 	
-	# Setup rest area at end of map
-	_create_rest_area()
+	# Setup ally interaction at end of map
+	_setup_ally()
 	
 	# Configure enemies and airplanes patrol ranges
 	_setup_enemies()
 
-func _process(_delta):
-	pass
+func _process(delta):
+	if can_interact_ally and not ally_interacted:
+		if Input.is_physical_key_pressed(KEY_E):
+			_on_ally_interacted()
+
+func _find_node_by_name_substring(sub: String, parent: Node) -> Node:
+	if sub.to_lower() in parent.name.to_lower():
+		return parent
+	for child in parent.get_children():
+		var found = _find_node_by_name_substring(sub, child)
+		if found: return found
+	return null
 
 func _find_node_by_type(type_name: String, group_name: String) -> Node:
 	# Search through direct children and their children
@@ -82,63 +96,65 @@ func _setup_enemies():
 				child.patrol_max_x = child.global_position.x + 300
 				child.patrol_y = child.global_position.y
 
-func _create_rest_area():
-	# Find the rightmost extent of the tilemap to place rest area
-	var tilemap = get_node_or_null("TileMap")
-	var rest_x = 3800.0  # default
-	
-	if tilemap:
-		var used_rect = tilemap.get_used_rect()
-		var tile_size = tilemap.tile_set.tile_size if tilemap.tile_set else Vector2i(16, 16)
-		rest_x = float(used_rect.end.x * tile_size.x) - 200.0
-	
-	# Create rest area trigger
-	var rest_area = Area2D.new()
-	rest_area.name = "RestArea"
-	rest_area.global_position = Vector2(rest_x, 300)
-	rest_area.collision_layer = 0
-	rest_area.collision_mask = 1
+func _setup_ally():
+	var ally = _find_node_by_name_substring("DongMinh", self)
+	if not ally:
+		# Fallback if taking too long or not exactly matches
+		_create_rest_area()
+		return
+		
+	var area = Area2D.new()
+	area.collision_layer = 0
+	area.collision_mask = 1 # Player layer
 	
 	var col = CollisionShape2D.new()
-	var shape = RectangleShape2D.new()
-	shape.size = Vector2(100, 400)
+	var shape = CircleShape2D.new()
+	shape.radius = 120.0
 	col.shape = shape
-	rest_area.add_child(col)
+	area.add_child(col)
 	
-	rest_area.body_entered.connect(_on_rest_area_entered)
-	add_child(rest_area)
+	ally.add_child(area)
 	
-	# Create visual marker for rest area
-	var label = Label.new()
-	label.text = "🏕️ NGHỈ NGƠI"
-	label.global_position = Vector2(rest_x - 60, 250)
-	label.add_theme_font_size_override("font_size", 16)
-	label.add_theme_color_override("font_color", Color(0.9, 0.85, 0.3))
-	add_child(label)
+	ally_label = Label.new()
+	ally_label.text = "[E] Trò chuyện"
+	ally_label.visible = false
+	ally_label.position = Vector2(-40, -60)
+	ally.add_child(ally_label)
+	
+	area.body_entered.connect(func(body):
+		if body.is_in_group("player") and not ally_interacted:
+			ally_label.visible = true
+			can_interact_ally = true
+	)
+	
+	area.body_exited.connect(func(body):
+		if body.is_in_group("player"):
+			if ally_label: ally_label.visible = false
+			can_interact_ally = false
+	)
 
-func _on_rest_area_entered(body):
-	if rest_area_triggered:
-		return
-	if body.is_in_group("player"):
-		rest_area_triggered = true
-		hud.show_message("🏕️ KHU VỰC NGHỈ NGƠI\nHoàn thành Rừng Điện Biên!", 3.0)
-		await get_tree().create_timer(3.0).timeout
-		_complete_level()
+func _on_ally_interacted():
+	ally_interacted = true
+	can_interact_ally = false
+	if ally_label:
+		ally_label.visible = false
+		
+	# Dialogue from Ally
+	hud.show_message("Đồng minh: Đồng chí làm tốt lắm, hãy nghỉ ngơi", 3.0)
+	await get_tree().create_timer(3.0).timeout
+	
+	# Show "Mission Accomplished" and "Rest"
+	_show_mission_accomplished()
 
-func _on_player_died():
-	# Single life - show score and return to menu
-	_show_game_over_screen()
-
-func _show_game_over_screen():
-	# Create a full-screen game over overlay
+func _show_mission_accomplished():
+	# Create overlay
 	var overlay = CanvasLayer.new()
 	overlay.layer = 100
 	add_child(overlay)
 	
 	var panel = ColorRect.new()
-	panel.color = Color(0, 0, 0, 0.75)
+	panel.color = Color(0, 0, 0, 0.85)
 	panel.anchors_preset = Control.PRESET_FULL_RECT
-	panel.mouse_filter = Control.MOUSE_FILTER_STOP
 	overlay.add_child(panel)
 	
 	var vbox = VBoxContainer.new()
@@ -149,44 +165,93 @@ func _show_game_over_screen():
 	overlay.add_child(vbox)
 	
 	var title = Label.new()
-	title.text = "ĐÃ HY SINH!"
-	title.add_theme_font_size_override("font_size", 36)
-	title.add_theme_color_override("font_color", Color(1, 0.3, 0.2))
+	title.text = "ĐÃ HOÀN THÀNH NHIỆM VỤ"
+	title.add_theme_font_size_override("font_size", 42)
+	title.add_theme_color_override("font_color", Color(0.2, 0.9, 0.3))
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vbox.add_child(title)
 	
 	var spacer = Control.new()
-	spacer.custom_minimum_size = Vector2(0, 20)
+	spacer.custom_minimum_size = Vector2(0, 30)
 	vbox.add_child(spacer)
 	
-	var level_label = Label.new()
-	level_label.text = "Màn: RỪNG ĐIỆN BIÊN"
-	level_label.add_theme_font_size_override("font_size", 20)
-	level_label.add_theme_color_override("font_color", Color(0.9, 0.85, 0.3))
-	level_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	vbox.add_child(level_label)
+	var subtitle = Label.new()
+	subtitle.text = "HÃY NGHỈ NGƠI"
+	subtitle.add_theme_font_size_override("font_size", 30)
+	subtitle.add_theme_color_override("font_color", Color(0.9, 0.85, 0.3))
+	subtitle.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	vbox.add_child(subtitle)
 	
-	var score_label = Label.new()
-	score_label.text = "Điểm: %d" % GameManager.score
-	score_label.add_theme_font_size_override("font_size", 28)
-	score_label.add_theme_color_override("font_color", Color(1, 1, 1))
-	score_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	vbox.add_child(score_label)
-	
-	var spacer2 = Control.new()
-	spacer2.custom_minimum_size = Vector2(0, 15)
-	vbox.add_child(spacer2)
-	
-	var hint = Label.new()
-	hint.text = "Quay về menu trong 4s..."
-	hint.add_theme_font_size_override("font_size", 14)
-	hint.add_theme_color_override("font_color", Color(0.7, 0.7, 0.7))
-	hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	vbox.add_child(hint)
-	
-	# Wait then go to menu
 	await get_tree().create_timer(4.0).timeout
-	GameManager.go_to_menu()
+	GameManager.complete_level()
+
+func _create_rest_area():
+	# Removed old rest area logic. If fallback happens we just print for now.
+	print("Ally not found for level completion.")
+
+func _on_player_died():
+	# Single life - show score and return to menu
+	_show_game_over_screen()
+
+func _show_game_over_screen():
+	# Pause the game and freeze screen
+	get_tree().paused = true
+	
+	# Create a full-screen game over overlay
+	var overlay = CanvasLayer.new()
+	overlay.layer = 100
+	overlay.process_mode = Node.PROCESS_MODE_ALWAYS
+	add_child(overlay)
+	
+	var control = Control.new()
+	overlay.add_child(control)
+	
+	var vp_size = get_viewport_rect().size
+	control.size = vp_size
+	
+	var panel = ColorRect.new()
+	panel.color = Color(0.1, 0.0, 0.0, 0.85)
+	panel.size = vp_size
+	control.add_child(panel)
+	
+	var center = CenterContainer.new()
+	center.size = vp_size
+	control.add_child(center)
+	
+	var vbox = VBoxContainer.new()
+	vbox.add_theme_constant_override("separation", 30)
+	vbox.alignment = BoxContainer.ALIGNMENT_CENTER
+	center.add_child(vbox)
+	
+	var title = Label.new()
+	title.text = "ĐỒNG CHÍ ĐÃ RẤT CỐ GẮNG"
+	title.add_theme_font_size_override("font_size", 48)
+	title.add_theme_color_override("font_color", Color(1, 0.3, 0.2))
+	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	vbox.add_child(title)
+	
+	var btn_hbox = HBoxContainer.new()
+	btn_hbox.alignment = BoxContainer.ALIGNMENT_CENTER
+	btn_hbox.add_theme_constant_override("separation", 40)
+	vbox.add_child(btn_hbox)
+	
+	var btn_retry = Button.new()
+	btn_retry.text = " CHƠI LẠI "
+	btn_retry.add_theme_font_size_override("font_size", 28)
+	btn_retry.pressed.connect(func(): 
+		get_tree().paused = false
+		get_tree().reload_current_scene()
+	)
+	btn_hbox.add_child(btn_retry)
+	
+	var btn_menu = Button.new()
+	btn_menu.text = " MÀN HÌNH CHÍNH "
+	btn_menu.add_theme_font_size_override("font_size", 28)
+	btn_menu.pressed.connect(func(): 
+		get_tree().paused = false
+		GameManager.go_to_menu()
+	)
+	btn_hbox.add_child(btn_menu)
 
 func _complete_level():
 	hud.show_message("HOÀN THÀNH NHIỆM VỤ!", 3.0)

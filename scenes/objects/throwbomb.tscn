@@ -1,0 +1,74 @@
+[gd_scene format=3 uid="uid://cqubnvlow0yws"]
+
+[ext_resource type="Texture2D" uid="uid://d1cwgvjy6g8pp" path="res://assets/sprites/level2/luudan/luudan1-removebg-preview.png" id="1_koqkq"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x1ds2"]
+atlas = ExtResource("1_koqkq")
+region = Rect2(0, 288, 192, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ytri0"]
+atlas = ExtResource("1_koqkq")
+region = Rect2(192, 288, 192, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p4xgp"]
+atlas = ExtResource("1_koqkq")
+region = Rect2(384, 288, 192, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_87nj0"]
+atlas = ExtResource("1_koqkq")
+region = Rect2(384, 144, 192, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mko7r"]
+atlas = ExtResource("1_koqkq")
+region = Rect2(192, 0, 192, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a7eoe"]
+atlas = ExtResource("1_koqkq")
+region = Rect2(384, 0, 192, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uq2n6"]
+atlas = ExtResource("1_koqkq")
+region = Rect2(192, 144, 192, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_joo3k"]
+atlas = ExtResource("1_koqkq")
+region = Rect2(0, 144, 192, 144)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_eco76"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x1ds2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ytri0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p4xgp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_87nj0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mko7r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a7eoe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uq2n6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_joo3k")
+}],
+"loop": true,
+"name": &"throw",
+"speed": 5.0
+}]
+
+[node name="Throwbomb" type="Node2D" unique_id=2025452299]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1041971174]
+sprite_frames = SubResource("SpriteFrames_eco76")
+animation = &"throw"
+frame_progress = 0.5193945

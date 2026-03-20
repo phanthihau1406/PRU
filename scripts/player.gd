@@ -387,14 +387,14 @@ func refill_current_magazine():
 	reload_timer = 0.0
 
 func _setup_audio():
-	sfx_shoot = _create_sfx_player("res://assets/audio/ak47_fire.mp3", -6.0)
+	sfx_shoot = _create_sfx_player("res://assets/audio/ak47_fire.mp3", -26.0)
 	sfx_reload = _create_sfx_player("res://assets/audio/reload_ak47.mp3", -6.0)
 	sfx_death = _create_sfx_player("res://assets/audio/reload_ak47.mp3", -8.0)
 	sfx_death.pitch_scale = 0.55
 	sfx_steps = [
-		_create_sfx_player("res://assets/audio/walk-on-grass-1.mp3", -12.0),
-		_create_sfx_player("res://assets/audio/walk-on-grass-2.mp3", -12.0),
-		_create_sfx_player("res://assets/audio/walk-on-grass-3.mp3", -12.0),
+		_create_sfx_player("res://assets/audio/walk-on-grass-1.mp3", 0.0),
+		_create_sfx_player("res://assets/audio/walk-on-grass-2.mp3", 0.0),
+		_create_sfx_player("res://assets/audio/walk-on-grass-3.mp3", 0.0),
 	]
 
 func _create_sfx_player(path: String, volume_db: float) -> AudioStreamPlayer:

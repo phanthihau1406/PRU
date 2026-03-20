@@ -48,7 +48,7 @@ var story_texts = {
 			"  → Tây Bắc    → Đông    → Đông Nam",
 			"  → Tây Nam    → Bắc",
 			"",
-			"Mục tiêu: chiếm các cơ quan đầu não của chính quyền Sài Gòn."
+			"Mục tiêu: Bảo về xe tăng quân đồng minh."
 		]
 	},
 	2: {

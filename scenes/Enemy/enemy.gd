@@ -24,12 +24,19 @@ var death_timer: float = 0.0
 @onready var anim_sprite: AnimatedSprite2D = $AnimatedSprite2D
 var bullet_scene = preload("res://scenes/objects/bullet.tscn")
 
+var sfx_shoot: AudioStreamPlayer2D
+
 func _ready():
 	patrol_origin = global_position.x
 	add_to_group("enemies")
 	z_index = 5
 	collision_layer = 2  # Enemy layer
 	collision_mask = 1   # Collide with terrain
+	
+	sfx_shoot = AudioStreamPlayer2D.new()
+	sfx_shoot.stream = load("res://assets/audio/ak47_fire.mp3")
+	sfx_shoot.volume_db = -18.0
+	add_child(sfx_shoot)
 	
 	# Ensure CollisionShape2D exists
 	if not get_node_or_null("CollisionShape2D"):
@@ -129,6 +136,9 @@ func _fire_bullet(player: Node2D):
 	var dir = (player.global_position - global_position).normalized()
 	bullet.setup(global_position + dir * 20, dir, 350, damage, Color(1, 0.6, 0.1), false)
 	get_tree().current_scene.add_child(bullet)
+	if sfx_shoot:
+		sfx_shoot.pitch_scale = randf_range(0.9, 1.1)
+		sfx_shoot.play()
 
 func _update_animation():
 	if not anim_sprite or state == State.DEAD:

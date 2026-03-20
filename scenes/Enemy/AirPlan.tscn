@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://btwqtcioogxy0"]
 
 [ext_resource type="Texture2D" uid="uid://bikbrkxyar5gs" path="res://assets/sprites/enemy/mayBay-removebg-preview.png" id="1_ln6wt"]
-[ext_resource type="Script" path="res://scenes/Enemy/airplane.gd" id="2_script"]
+[ext_resource type="Script" uid="uid://h6jklak1m4ih" path="res://scenes/Enemy/airplane.gd" id="2_script"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rybwn"]
 atlas = ExtResource("1_ln6wt")
@@ -11,11 +11,43 @@ region = Rect2(0, 0, 166, 166)
 atlas = ExtResource("1_ln6wt")
 region = Rect2(166, 0, 166, 166)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_rpmen"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_kab8c"]
+atlas = ExtResource("1_ln6wt")
+region = Rect2(166, 0, 166, 166)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_keey0"]
+atlas = ExtResource("1_ln6wt")
+region = Rect2(0, 0, 166, 166)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a1am4"]
+atlas = ExtResource("1_ln6wt")
+region = Rect2(166, 0, 166, 166)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rkyw4"]
+atlas = ExtResource("1_ln6wt")
+region = Rect2(0, 0, 166, 166)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sp807"]
 atlas = ExtResource("1_ln6wt")
 region = Rect2(0, 166, 166, 166)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_sa3x7"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_i4ut0"]
+atlas = ExtResource("1_ln6wt")
+region = Rect2(332, 166, 166, 166)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cso1m"]
+atlas = ExtResource("1_ln6wt")
+region = Rect2(0, 166, 166, 166)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cmtwe"]
+atlas = ExtResource("1_ln6wt")
+region = Rect2(332, 166, 166, 166)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fpcsy"]
+atlas = ExtResource("1_ln6wt")
+region = Rect2(0, 166, 166, 166)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3vrvq"]
 atlas = ExtResource("1_ln6wt")
 region = Rect2(332, 166, 166, 166)
 
@@ -29,14 +61,43 @@ animations = [{
 "texture": SubResource("AtlasTexture_qwss5")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_rpmen")
+"texture": SubResource("AtlasTexture_kab8c")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_sa3x7")
+"texture": SubResource("AtlasTexture_keey0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a1am4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rkyw4")
 }],
 "loop": true,
-"name": &"fly",
-"speed": 2.0
+"name": &"fly_left",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sp807")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i4ut0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cso1m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cmtwe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fpcsy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3vrvq")
+}],
+"loop": true,
+"name": &"fly_right",
+"speed": 5.0
 }]
 
 [node name="Plan" type="Node2D" unique_id=1131624227]
@@ -45,4 +106,5 @@ script = ExtResource("2_script")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1151393099]
 scale = Vector2(0.8, 0.8)
 sprite_frames = SubResource("SpriteFrames_ska2a")
-animation = &"fly"
+animation = &"fly_right"
+frame_progress = 0.06495611

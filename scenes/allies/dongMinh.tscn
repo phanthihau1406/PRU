@@ -1,0 +1,63 @@
+[gd_scene format=3 uid="uid://bgk17nelsi1ox"]
+
+[ext_resource type="Texture2D" uid="uid://ldxh71158mk5" path="res://assets/sprites/player/dongMinh-removebg-preview.png" id="1_6cuak"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_64e2i"]
+atlas = ExtResource("1_6cuak")
+region = Rect2(0, 330, 166, 165)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fra0u"]
+atlas = ExtResource("1_6cuak")
+region = Rect2(166, 330, 166, 165)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w0vtg"]
+atlas = ExtResource("1_6cuak")
+region = Rect2(332, 330, 166, 165)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2fn85"]
+atlas = ExtResource("1_6cuak")
+region = Rect2(0, 330, 166, 165)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rb8dv"]
+atlas = ExtResource("1_6cuak")
+region = Rect2(166, 330, 166, 165)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yevf1"]
+atlas = ExtResource("1_6cuak")
+region = Rect2(332, 330, 166, 165)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_sxtqw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_64e2i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fra0u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w0vtg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2fn85")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rb8dv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yevf1")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 4.0
+}]
+
+[node name="DongMinh" type="Node2D" unique_id=1514636891]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1647858103]
+position = Vector2(0, 0)
+scale = Vector2(0.32, 0.32)
+sprite_frames = SubResource("SpriteFrames_sxtqw")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.14550982

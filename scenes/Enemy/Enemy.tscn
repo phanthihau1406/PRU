@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://qo1b4hn4l6sq" path="res://assets/sprites/enemy/chetM-removebg-preview.png" id="1_8fccx"]
 [ext_resource type="Texture2D" uid="uid://bwdwx4k1nqox2" path="res://assets/sprites/enemy/chayM-removebg-preview.png" id="2_hjlif"]
 [ext_resource type="Texture2D" uid="uid://cvkvij2ppnbqt" path="res://assets/sprites/enemy/banM-removebg-preview.png" id="3_b6xdp"]
-[ext_resource type="Script" path="res://scenes/Enemy/enemy.gd" id="4_script"]
+[ext_resource type="Script" uid="uid://ch1yeksyilula" path="res://scenes/Enemy/enemy.gd" id="4_script"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pg87x"]
 atlas = ExtResource("1_8fccx")
@@ -143,13 +143,10 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_enemy"]
-radius = 10.0
 height = 28.0
 
 [node name="Enemy" type="CharacterBody2D" unique_id=589481574]
-scale = Vector2(1.6, 1.6)
 collision_layer = 2
-collision_mask = 1
 script = ExtResource("4_script")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1423653669]
@@ -157,5 +154,5 @@ scale = Vector2(0.18, 0.18)
 sprite_frames = SubResource("SpriteFrames_x2dqr")
 animation = &"run"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1467032368]
 shape = SubResource("CapsuleShape2D_enemy")

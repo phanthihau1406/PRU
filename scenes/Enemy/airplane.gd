@@ -24,7 +24,7 @@ var death_timer: float = 0.0
 var lost_sight_timer: float = 0.0  # Grace period before returning to patrol
 
 @onready var anim_sprite: AnimatedSprite2D = $AnimatedSprite2D
-var bullet_scene = preload("res://scenes/objects/bullet.tscn")
+var tenlua_scene = preload("res://scenes/Enemy/tenLua.tscn")
 
 func _ready():
 	add_to_group("enemies")
@@ -34,7 +34,7 @@ func _ready():
 		patrol_y = global_position.y
 	
 	if anim_sprite:
-		anim_sprite.play("fly")
+		anim_sprite.play("fly_right")
 
 func _physics_process(delta):
 	if state == State.DEAD:
@@ -75,15 +75,19 @@ func _physics_process(delta):
 					# Continue flying in last direction
 					global_position.x += direction * speed * delta
 	
-	# Update sprite direction
+	# Update sprite direction and animation
 	if anim_sprite:
-		anim_sprite.flip_h = direction < 0
+		if direction < 0:
+			if anim_sprite.animation != "fly_left":
+				anim_sprite.play("fly_left")
+		else:
+			if anim_sprite.animation != "fly_right":
+				anim_sprite.play("fly_right")
 
 func _patrol(delta):
 	global_position.x += direction * speed * delta
+	global_position.y = patrol_y
 	
-	# Slight sine wave altitude
-	global_position.y = patrol_y + sin(Time.get_ticks_msec() / 1000.0) * 8.0
 	
 	if global_position.x > patrol_max_x:
 		direction = -1.0
@@ -91,16 +95,13 @@ func _patrol(delta):
 		direction = 1.0
 
 func _chase(player: Node2D, delta):
-	# Fly above player, maintain altitude
-	var target_y = player.global_position.y - 100
-	
 	if player.global_position.x > global_position.x:
 		direction = 1.0
 	else:
 		direction = -1.0
 	
 	global_position.x += direction * chase_speed * delta
-	global_position.y = move_toward(global_position.y, target_y, 80 * delta)
+	global_position.y = patrol_y
 	
 	# Loosened bounds during chase
 	global_position.x = clampf(global_position.x, patrol_min_x - 300, patrol_max_x + 300)
@@ -111,36 +112,13 @@ func _try_shoot(player: Node2D, delta):
 		_fire_at_player(player)
 		shoot_timer = shoot_cooldown
 
-func _fire_at_player(player: Node2D):
-	if not bullet_scene:
+func _fire_at_player(_player: Node2D):
+	if not tenlua_scene:
 		return
 	
-	# Shoot bullet aimed at player
-	var bullet = bullet_scene.instantiate()
-	var dir = (player.global_position - global_position).normalized()
-	bullet.setup(
-		global_position + Vector2(0, 15),
-		dir,
-		350.0,
-		damage,
-		Color(1.0, 0.45, 0.1),
-		false  # Not player bullet
-	)
-	get_tree().current_scene.add_child(bullet)
-	
-	# Also drop a bomb straight down occasionally
-	if randf() < 0.3:
-		var bomb = bullet_scene.instantiate()
-		var bomb_dir = Vector2(direction * 0.1, 1.0).normalized()
-		bomb.setup(
-			global_position + Vector2(0, 15),
-			bomb_dir,
-			180.0,
-			damage,
-			Color(1.0, 0.3, 0.0),
-			false
-		)
-		get_tree().current_scene.add_child(bomb)
+	var bomb = tenlua_scene.instantiate()
+	bomb.global_position = global_position + Vector2(0, 15)
+	get_tree().current_scene.add_child(bomb)
 
 func _check_line_of_sight(player: Node2D) -> bool:
 	# Cast a ray from airplane DOWN to the player

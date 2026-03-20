@@ -1,0 +1,72 @@
+[gd_scene format=3 uid="uid://c5h2858lujpvv"]
+
+[ext_resource type="Script" uid="uid://y1qp3kjgwnsf" path="res://scenes/Enemy/tenLua.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://dciw3wolh6t0k" path="res://assets/sprites/enemy/tenLua-removebg-preview.png" id="2_sprite"]
+[ext_resource type="AudioStream" uid="uid://cyw5t0v8kp6qa" path="res://assets/audio/tiengNo.mp3" id="3_sfx"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ten"]
+radius = 12.0
+height = 60.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qn456"]
+atlas = ExtResource("2_sprite")
+region = Rect2(0, 0, 166, 165)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_evh8e"]
+atlas = ExtResource("2_sprite")
+region = Rect2(0, 165, 166, 165)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yy1wi"]
+atlas = ExtResource("2_sprite")
+region = Rect2(0, 330, 166, 165)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8m83b"]
+atlas = ExtResource("2_sprite")
+region = Rect2(166, 330, 166, 165)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xereq"]
+atlas = ExtResource("2_sprite")
+region = Rect2(332, 330, 166, 165)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4slfl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qn456")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_evh8e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yy1wi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8m83b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xereq")
+}],
+"loop": false,
+"name": &"shoot",
+"speed": 5.0
+}]
+
+[node name="TenLua" type="Area2D" unique_id=1921502561]
+z_index = 8
+collision_layer = 4
+collision_mask = 3
+script = ExtResource("1_script")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1975921004]
+shape = SubResource("CapsuleShape2D_ten")
+
+[node name="SfxNo" type="AudioStreamPlayer2D" parent="." unique_id=1705212596]
+stream = ExtResource("3_sfx")
+volume_db = 5.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1199187717]
+position = Vector2(-9.536743e-07, 4.0000005)
+scale = Vector2(0.4068138, 0.3226329)
+sprite_frames = SubResource("SpriteFrames_4slfl")
+animation = &"shoot"
+frame_progress = 0.26293907
