@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://dhl1rg52602q7" path="res://assets/sprites/level2/t54_spritesheet-removebg-preview.png" id="1_0iknf"]
 [ext_resource type="Texture2D" uid="uid://d4e3cqusuu6k6" path="res://assets/sprites/level2/t54-removebg-preview.png" id="2_ofdrf"]
+[ext_resource type="Script" path="res://scripts/tank_t54.gd" id="1_script_t54"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_x57vx"]
 atlas = ExtResource("1_0iknf")
@@ -204,7 +205,31 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="TankT54" type="Node2D" unique_id=330482878]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t54"]
+size = Vector2(140, 60)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t54_bg"]
+bg_color = Color(0.2, 0.2, 0.2, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t54_fg"]
+bg_color = Color(0.2, 0.8, 0.2, 1)
+
+[node name="TankT54" type="CharacterBody2D" unique_id=330482878]
+script = ExtResource("1_script_t54")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 20)
+shape = SubResource("RectangleShape2D_t54")
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+offset_left = -50.0
+offset_top = -60.0
+offset_right = 50.0
+offset_bottom = -50.0
+theme_override_styles/background = SubResource("StyleBoxFlat_t54_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_t54_fg")
+value = 100.0
+show_percentage = false
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1907943219]
 sprite_frames = SubResource("SpriteFrames_j0ti3")

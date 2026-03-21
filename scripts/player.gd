@@ -316,18 +316,6 @@ func _init_magazines():
 		ammo_in_mag[i] = int(w.mag_size)
 
 func _handle_weapon_controls(delta: float):
-	if Input.is_action_just_pressed("weapon_next"):
-		GameManager.next_weapon()
-		is_reloading = false
-		reload_timer = 0.0
-		weapon_changed.emit(GameManager.get_weapon_data().name)
-
-	if Input.is_action_just_pressed("weapon_prev"):
-		GameManager.prev_weapon()
-		is_reloading = false
-		reload_timer = 0.0
-		weapon_changed.emit(GameManager.get_weapon_data().name)
-
 	if Input.is_action_just_pressed("reload"):
 		_start_reload()
 

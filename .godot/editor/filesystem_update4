@@ -1,6 +1,6 @@
-res://scenes/Enemy/tenLua.tscn
-res://scenes/Enemy/tenLua.gd
-res://scenes/Enemy/enemy.gd
-res://scenes/level_1.tscn
-res://scripts/player.gd
+res://scripts/bullet.gd
+res://scripts/tank_t54.gd
 res://scenes/level_2.gd
+res://scenes/level_2.tscn
+res://scenes/objects/tunnel_darkness_area.tscn
+res://scripts/player.gd

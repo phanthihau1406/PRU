@@ -29,8 +29,8 @@ func _ready():
 		collision_layer = 4  # Layer 3
 		collision_mask = 2   # Layer 2 (enemies)
 	else:
-		collision_layer = 8  # Layer 4
-		collision_mask = 1   # Layer 1 (player)
+		collision_layer = 8   # Layer 4
+		collision_mask = 17   # Layer 1 (player) and Layer 5 (allies)
 	
 	body_entered.connect(_on_body_entered)
 	area_entered.connect(_on_area_entered)

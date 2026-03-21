@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://qfbes1etx4ff"]
+
+[ext_resource type="Script" uid="uid://bywc58m52lto4" path="res://scenes/objects/tunnel_darkness_area.gd" id="1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tunnel"]
+size = Vector2(6192, 600)
+
+[node name="TunnelDarknessArea" type="Area2D" unique_id=1225324044]
+collision_layer = 0
+collision_mask = 255
+script = ExtResource("1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=12612922]
+position = Vector2(2696, 0)
+shape = SubResource("RectangleShape2D_tunnel")

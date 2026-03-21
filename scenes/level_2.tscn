@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dnvqdbs6my1ar"]
 
 [ext_resource type="Texture2D" uid="uid://do1ddfmwjhykt" path="res://assets/sprites/Tiles.png" id="1_que50"]
+[ext_resource type="Script" uid="uid://c5n5vtmj71owa" path="res://scenes/level_2.gd" id="1_script_lvl2"]
 [ext_resource type="Texture2D" uid="uid://5xn7tdtqsojd" path="res://assets/craftpix-net-699134-free-bush-assets-pixel-art-pack/PNG/Bushes3/Bush3_3.png" id="2_hey2k"]
 [ext_resource type="Texture2D" uid="uid://c6rdkcrolr11q" path="res://assets/craftpix-net-699134-free-bush-assets-pixel-art-pack/PNG/Bushes3/Bush3_4.png" id="3_172wr"]
 [ext_resource type="Texture2D" uid="uid://0qr1ek3bqvp7" path="res://assets/craftpix-net-699134-free-bush-assets-pixel-art-pack/PNG/Bushes1/Bush1_1.png" id="4_g2hoc"]
@@ -13,7 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://dyn55iygtg568" path="res://scenes/Enemy/Enemy.tscn" id="11_g2hoc"]
 [ext_resource type="PackedScene" uid="uid://dbdyudgrl6rpe" path="res://scenes/objects/tank_t-54.tscn" id="12_fldb1"]
 [ext_resource type="PackedScene" uid="uid://vd1rn70gjnji" path="res://scenes/objects/tank_m-48.tscn" id="13_guvtl"]
-[ext_resource type="Script" path="res://scenes/level_2.gd" id="1_script_lvl2"]
+[ext_resource type="PackedScene" uid="uid://qfbes1etx4ff" path="res://scenes/objects/tunnel_darkness_area.tscn" id="15_guvtl"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_k22d5"]
 texture = ExtResource("1_que50")
@@ -711,3 +712,6 @@ position = Vector2(7040, 196)
 
 [node name="Enemy13" parent="." unique_id=1254948416 instance=ExtResource("11_g2hoc")]
 position = Vector2(7848, 201)
+
+[node name="TunnelDarknessArea" parent="." unique_id=1225324044 instance=ExtResource("15_guvtl")]
+position = Vector2(262, 184)

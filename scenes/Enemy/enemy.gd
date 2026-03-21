@@ -160,10 +160,18 @@ func _update_animation():
 					anim_sprite.play("run")
 
 func _find_player() -> Node2D:
-	var players = get_tree().get_nodes_in_group("player")
-	if players.size() > 0:
-		return players[0]
-	return null
+	var targets = get_tree().get_nodes_in_group("player") + get_tree().get_nodes_in_group("allies")
+	var closest_target = null
+	var closest_dist = INF
+	
+	for t in targets:
+		if "is_dead" in t and t.is_dead: continue
+		var dist = global_position.distance_to(t.global_position)
+		if dist < closest_dist:
+			closest_dist = dist
+			closest_target = t
+			
+	return closest_target
 
 func take_damage(amount: float):
 	health -= amount

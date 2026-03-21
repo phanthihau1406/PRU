@@ -1,5 +1,5 @@
 63f7b34db8d8cdea90c76aacccf841ec
-::res://::1774026773
+::res://::1774029262
 p_layer.tscn::PackedScene::6276496267018802571::1774015716::0::1::::<><><>0<>0<><>::uid://64simpk36wlo::::res://scenes/Player/PLayer.tscn
 ::res://assets/::1774009345
 tilesetHam2.png::CompressedTexture2D::5038978886887081159::1774009344::1774009345::1::::<><><>0<>0<>2e767e8df92a3842552080bbaeef574b<>res://.godot/imported/tilesetHam2.png-946a16758a2c9dc600dbc221fbd1a8a5.ctex::
@@ -70,10 +70,11 @@ dongMinh-removebg-preview.png::CompressedTexture2D::779681126806340298::17740143
 nemLuuDan-removebg-preview.png::CompressedTexture2D::304772599155270647::1774004927::1774004928::1::::<><><>0<>0<>c8d1a8594bb208484b43f0426ec7e30d<>res://.godot/imported/nemLuuDan-removebg-preview.png-49e63322e53c63a7a2784d0aa9c82461.ctex::
 nen.png::CompressedTexture2D::6723958516437179640::1773999759::1773999799::1::::<><><>0<>0<>0e48d7c6534e4765f83d9bf793db4535<>res://.godot/imported/nen.png-a025e2faa4258850782491e328081c9b.ctex::
 nhay-removebg-preview.png::CompressedTexture2D::6317913178458992650::1773999759::1773999799::1::::<><><>0<>0<>d73d7ab9deecc7c51fac287ab36a8cda<>res://.godot/imported/nhay-removebg-preview.png-d4411309b570dd0bef91c5057b41e35b.ctex::
-::res://scenes/::1774021368
+::res://scenes/::1774027983
 level_1.gd::GDScript::4674160321769364481::1774018856::0::1::::<>Node2D<><>0<>0<><>::
-level_1.tscn::PackedScene::4277305223577202377::1774021368::0::1::::<><><>0<>0<><>::uid://do1ddfmwjhykt::::res://assets/sprites/Tiles.png<>uid://64simpk36wlo::::res://scenes/Player/PLayer.tscn<>uid://dyn55iygtg568::::res://scenes/Enemy/Enemy.tscn<>uid://0qr1ek3bqvp7::::res://assets/craftpix-net-699134-free-bush-assets-pixel-art-pack/PNG/Bushes1/Bush1_1.png<>uid://botsogknle5to::::res://assets/craftpix-net-699134-free-bush-assets-pixel-art-pack/PNG/Bushes10/Bush10_4.png<>uid://8ch75k8642vg::::res://assets/craftpix-net-699134-free-bush-assets-pixel-art-pack/PNG/Bushes1/Bush1_2.png<>uid://btwqtcioogxy0::::res://scenes/Enemy/AirPlan.tscn<>uid://xpbf7e7t13g6::::res://assets/craftpix-net-699134-free-bush-assets-pixel-art-pack/PNG/Bushes1/Bush1_3.png<>uid://b7ug0cwqk2syr::::res://scenes/level_1.gd<>uid://cyqs2d1dgb7rm::::res://assets/craftpix-net-699134-free-bush-assets-pixel-art-pack/PNG/Bushes10/Bush10_2.png<>uid://bfrecxc0g8qmd::::res://assets/craftpix-net-699134-free-bush-assets-pixel-art-pack/PNG/Bushes10/Bush10_1.png<>uid://c4fwyhdo7m7a7::::res://assets/craftpix-net-699134-free-bush-assets-pixel-art-pack/PNG/Bushes1/Bush1_4.png<>uid://cgmpf5foir8q3::::res://assets/craftpix-net-699134-free-bush-assets-pixel-art-pack/PNG/Bushes3/Bush3_1.png<>uid://bosdxw7cmna2s::::res://assets/craftpix-net-699134-free-bush-assets-pixel-art-pack/PNG/Bushes3/Bush3_2.png<>uid://5xn7tdtqsojd::::res://assets/craftpix-net-699134-free-bush-assets-pixel-art-pack/PNG/Bushes3/Bush3_3.png<>uid://c6rdkcrolr11q::::res://assets/craftpix-net-699134-free-bush-assets-pixel-art-pack/PNG/Bushes3/Bush3_4.png<>uid://cc3pmw7qnhhwn::::res://assets/craftpix-net-699134-free-bush-assets-pixel-art-pack/PNG/Bushes10/Bush10_3.png<>uid://bgk17nelsi1ox::::res://scenes/allies/dongMinh.tscn
-level_2.tscn::PackedScene::8116045862230294745::1774013176::0::1::::<><><>0<>0<><>::uid://do1ddfmwjhykt::::res://assets/sprites/Tiles.png<>uid://5xn7tdtqsojd::::res://assets/craftpix-net-699134-free-bush-assets-pixel-art-pack/PNG/Bushes3/Bush3_3.png<>uid://c6rdkcrolr11q::::res://assets/craftpix-net-699134-free-bush-assets-pixel-art-pack/PNG/Bushes3/Bush3_4.png<>uid://0qr1ek3bqvp7::::res://assets/craftpix-net-699134-free-bush-assets-pixel-art-pack/PNG/Bushes1/Bush1_1.png<>uid://8ch75k8642vg::::res://assets/craftpix-net-699134-free-bush-assets-pixel-art-pack/PNG/Bushes1/Bush1_2.png<>uid://xpbf7e7t13g6::::res://assets/craftpix-net-699134-free-bush-assets-pixel-art-pack/PNG/Bushes1/Bush1_3.png<>uid://c4fwyhdo7m7a7::::res://assets/craftpix-net-699134-free-bush-assets-pixel-art-pack/PNG/Bushes1/Bush1_4.png<>uid://cgmpf5foir8q3::::res://assets/craftpix-net-699134-free-bush-assets-pixel-art-pack/PNG/Bushes3/Bush3_1.png<>uid://bosdxw7cmna2s::::res://assets/craftpix-net-699134-free-bush-assets-pixel-art-pack/PNG/Bushes3/Bush3_2.png<>uid://64simpk36wlo::::res://scenes/Player/PLayer.tscn<>uid://dyn55iygtg568::::res://scenes/Enemy/Enemy.tscn<>uid://dbdyudgrl6rpe::::res://scenes/objects/tank_t-54.tscn<>uid://vd1rn70gjnji::::res://scenes/objects/tank_m-48.tscn
+level_1.tscn::PackedScene::4277305223577202377::1774027532::0::1::::<><><>0<>0<><>::uid://do1ddfmwjhykt::::res://assets/sprites/Tiles.png<>uid://64simpk36wlo::::res://scenes/Player/PLayer.tscn<>uid://dyn55iygtg568::::res://scenes/Enemy/Enemy.tscn<>uid://0qr1ek3bqvp7::::res://assets/craftpix-net-699134-free-bush-assets-pixel-art-pack/PNG/Bushes1/Bush1_1.png<>uid://botsogknle5to::::res://assets/craftpix-net-699134-free-bush-assets-pixel-art-pack/PNG/Bushes10/Bush10_4.png<>uid://8ch75k8642vg::::res://assets/craftpix-net-699134-free-bush-assets-pixel-art-pack/PNG/Bushes1/Bush1_2.png<>uid://btwqtcioogxy0::::res://scenes/Enemy/AirPlan.tscn<>uid://xpbf7e7t13g6::::res://assets/craftpix-net-699134-free-bush-assets-pixel-art-pack/PNG/Bushes1/Bush1_3.png<>uid://b7ug0cwqk2syr::::res://scenes/level_1.gd<>uid://cyqs2d1dgb7rm::::res://assets/craftpix-net-699134-free-bush-assets-pixel-art-pack/PNG/Bushes10/Bush10_2.png<>uid://bfrecxc0g8qmd::::res://assets/craftpix-net-699134-free-bush-assets-pixel-art-pack/PNG/Bushes10/Bush10_1.png<>uid://c4fwyhdo7m7a7::::res://assets/craftpix-net-699134-free-bush-assets-pixel-art-pack/PNG/Bushes1/Bush1_4.png<>uid://cgmpf5foir8q3::::res://assets/craftpix-net-699134-free-bush-assets-pixel-art-pack/PNG/Bushes3/Bush3_1.png<>uid://bosdxw7cmna2s::::res://assets/craftpix-net-699134-free-bush-assets-pixel-art-pack/PNG/Bushes3/Bush3_2.png<>uid://5xn7tdtqsojd::::res://assets/craftpix-net-699134-free-bush-assets-pixel-art-pack/PNG/Bushes3/Bush3_3.png<>uid://c6rdkcrolr11q::::res://assets/craftpix-net-699134-free-bush-assets-pixel-art-pack/PNG/Bushes3/Bush3_4.png<>uid://cc3pmw7qnhhwn::::res://assets/craftpix-net-699134-free-bush-assets-pixel-art-pack/PNG/Bushes10/Bush10_3.png<>uid://bgk17nelsi1ox::::res://scenes/allies/dongMinh.tscn
+level_2.gd::GDScript::6907203615718973588::1774028896::0::1::::<>Node2D<><>0<>0<><>::
+level_2.tscn::PackedScene::8116045862230294745::1774027777::0::1::::<><><>0<>0<><>::uid://do1ddfmwjhykt::::res://assets/sprites/Tiles.png<>uid://5xn7tdtqsojd::::res://assets/craftpix-net-699134-free-bush-assets-pixel-art-pack/PNG/Bushes3/Bush3_3.png<>uid://c6rdkcrolr11q::::res://assets/craftpix-net-699134-free-bush-assets-pixel-art-pack/PNG/Bushes3/Bush3_4.png<>uid://0qr1ek3bqvp7::::res://assets/craftpix-net-699134-free-bush-assets-pixel-art-pack/PNG/Bushes1/Bush1_1.png<>uid://8ch75k8642vg::::res://assets/craftpix-net-699134-free-bush-assets-pixel-art-pack/PNG/Bushes1/Bush1_2.png<>uid://xpbf7e7t13g6::::res://assets/craftpix-net-699134-free-bush-assets-pixel-art-pack/PNG/Bushes1/Bush1_3.png<>uid://c4fwyhdo7m7a7::::res://assets/craftpix-net-699134-free-bush-assets-pixel-art-pack/PNG/Bushes1/Bush1_4.png<>uid://cgmpf5foir8q3::::res://assets/craftpix-net-699134-free-bush-assets-pixel-art-pack/PNG/Bushes3/Bush3_1.png<>uid://bosdxw7cmna2s::::res://assets/craftpix-net-699134-free-bush-assets-pixel-art-pack/PNG/Bushes3/Bush3_2.png<>uid://64simpk36wlo::::res://scenes/Player/PLayer.tscn<>uid://dyn55iygtg568::::res://scenes/Enemy/Enemy.tscn<>uid://dbdyudgrl6rpe::::res://scenes/objects/tank_t-54.tscn<>uid://vd1rn70gjnji::::res://scenes/objects/tank_m-48.tscn<>res://scenes/level_2.gd
 level_3.tscn::PackedScene::-1::1773999759::0::1::::<><><>0<>0<><>::res://scripts/level_3.gd<>res://scripts/camera_follow.gd
 level_4.tscn::PackedScene::-1::1773999759::0::1::::<><><>0<>0<><>::res://scripts/level_4.gd<>res://scripts/camera_follow.gd
 level_5.tscn::PackedScene::-1::1773999759::0::1::::<><><>0<>0<><>::res://scripts/level_5.gd<>res://scripts/camera_follow.gd
@@ -83,14 +84,14 @@ story_screen.tscn::PackedScene::429061803046695218::1773999759::0::1::::<><><>0<
 victory_screen.tscn::PackedScene::5898563742177156234::1773999759::0::1::::<><><>0<>0<><>::uid://uudq67imkq80::::res://scripts/victory_screen.gd<>uid://des6iy4ulb8am::::res://assets/audio/Còn gì đẹp hơn - Nguyễn Hùng  Lyrics Video_[cut_44sec].mp3
 ::res://scenes/allies/::1774016308
 dongMinh.tscn::PackedScene::2829833999785736091::1774019159::0::1::::<><><>0<>0<><>::uid://ldxh71158mk5::::res://assets/sprites/player/dongMinh-removebg-preview.png
-::res://scenes/Enemy/::1774021524
+::res://scenes/Enemy/::1774027078
 AirPlan.tscn::PackedScene::3766430543433691381::1774015712::0::1::::<><><>0<>0<><>::uid://bikbrkxyar5gs::::res://assets/sprites/enemy/mayBay-removebg-preview.png<>uid://h6jklak1m4ih::::res://scenes/Enemy/airplane.gd
 airplane.gd::GDScript::555882504962482891::1774021297::0::1::::<>Node2D<><>0<>0<><>::
-enemy.gd::GDScript::5319301999601575326::1773999759::0::1::::<>CharacterBody2D<><>0<>0<><>::
+enemy.gd::GDScript::5319301999601575326::1774028821::0::1::::<>CharacterBody2D<><>0<>0<><>::
 Enemy.tscn::PackedScene::8872506750355379927::1774016308::0::1::::<><><>0<>0<><>::uid://qo1b4hn4l6sq::::res://assets/sprites/enemy/chetM-removebg-preview.png<>uid://bwdwx4k1nqox2::::res://assets/sprites/enemy/chayM-removebg-preview.png<>uid://cvkvij2ppnbqt::::res://assets/sprites/enemy/banM-removebg-preview.png<>uid://ch1yeksyilula::::res://scenes/Enemy/enemy.gd
 health_pickup.gd::GDScript::4808211717987949866::1773999759::0::1::::<>Area2D<><>0<>0<><>::
-tenLua.gd::GDScript::1739205814230833613::1774021221::0::1::::<>Area2D<><>0<>0<><>::
-tenLua.tscn::PackedScene::6894657238015086403::1774021624::0::1::::<><><>0<>0<><>::uid://y1qp3kjgwnsf::::res://scenes/Enemy/tenLua.gd<>uid://dciw3wolh6t0k::::res://assets/sprites/enemy/tenLua-removebg-preview.png<>uid://cyw5t0v8kp6qa::::res://assets/audio/tiengNo.mp3
+tenLua.gd::GDScript::1739205814230833613::1774026951::0::1::::<>Area2D<><>0<>0<><>::
+tenLua.tscn::PackedScene::6894657238015086403::1774027191::0::1::::<><><>0<>0<><>::uid://y1qp3kjgwnsf::::res://scenes/Enemy/tenLua.gd<>uid://dciw3wolh6t0k::::res://assets/sprites/enemy/tenLua-removebg-preview.png<>uid://cyw5t0v8kp6qa::::res://assets/audio/tiengNo.mp3
 ::res://scenes/objects/::1774012688
 ally_soldier.tscn::PackedScene::-1::1773999759::0::1::::<><><>0<>0<><>::res://scripts/ally_soldier.gd
 boss_building.tscn::PackedScene::-1::1773999759::0::1::::<><><>0<>0<><>::res://scripts/boss_building.gd
@@ -106,8 +107,8 @@ no.tscn::PackedScene::2738050633642599662::1774005513::0::1::::<><><>0<>0<><>::u
 player.tscn::PackedScene::2031362679572897055::1774012688::0::1::::<><><>0<>0<><>::uid://b76ob5mp5y2e8::::res://scripts/player.gd
 powerup.tscn::PackedScene::-1::1773999759::0::1::::<><><>0<>0<><>::res://scripts/powerup.gd
 sniper_enemy.tscn::PackedScene::8657633962481462588::1774012688::0::1::::<><><>0<>0<><>::uid://dfcrbuvi6erf3::::res://scripts/sniper_enemy.gd
-tank_m-48.tscn::PackedScene::1481768583350736566::1774012688::0::1::::<><><>0<>0<><>::uid://doy06trpkptyk::::res://assets/sprites/level2/m48_left-right_spritesheet-removebg-preview.png<>uid://6jud7re0e3ob::::res://assets/sprites/level2/m48_left_spritesheet-removebg-preview.png<>uid://be3bll2btrpb::::res://assets/sprites/level2/m48_spritesheet-removebg-preview.png
-tank_t-54.tscn::PackedScene::7237137119311225358::1774012688::0::1::::<><><>0<>0<><>::uid://dhl1rg52602q7::::res://assets/sprites/level2/t54_spritesheet-removebg-preview.png<>uid://d4e3cqusuu6k6::::res://assets/sprites/level2/t54-removebg-preview.png
+tank_m-48.tscn::PackedScene::1481768583350736566::1774028795::0::1::::<><><>0<>0<><>::uid://doy06trpkptyk::::res://assets/sprites/level2/m48_left-right_spritesheet-removebg-preview.png<>uid://6jud7re0e3ob::::res://assets/sprites/level2/m48_left_spritesheet-removebg-preview.png<>uid://be3bll2btrpb::::res://assets/sprites/level2/m48_spritesheet-removebg-preview.png<>res://scripts/tank_m48.gd
+tank_t-54.tscn::PackedScene::7237137119311225358::1774028779::0::1::::<><><>0<>0<><>::uid://dhl1rg52602q7::::res://assets/sprites/level2/t54_spritesheet-removebg-preview.png<>uid://d4e3cqusuu6k6::::res://assets/sprites/level2/t54-removebg-preview.png<>res://scripts/tank_t54.gd
 tank_vehicle.tscn::PackedScene::4774489297077803080::1774012688::0::1::::<><><>0<>0<><>::uid://dcjib7apfrwvj::::res://scripts/tank_vehicle.gd
 throwbomb.tscn::PackedScene::5937235473639153926::1774005513::0::1::::<><><>0<>0<><>::uid://d1cwgvjy6g8pp::::res://assets/sprites/level2/luudan/luudan1-removebg-preview.png
 ::res://scenes/Player/::1774005513
@@ -116,7 +117,7 @@ PLayer.tscn::PackedScene::2236828953813056788::1774005513::0::1::::<><><>0<>0<><
 ::res://scenes/ui/::1774018904
 hud.tscn::PackedScene::-1::1774016795::0::1::::<><><>0<>0<><>::res://scripts/hud.gd
 level_2.tscn::PackedScene::4627134371158845328::1774018904::0::1::::<><><>0<>0<><>::uid://do1ddfmwjhykt::::res://assets/sprites/Tiles.png<>uid://64simpk36wlo::::res://scenes/Player/PLayer.tscn
-::res://scripts/::1773999759
+::res://scripts/::1774029165
 ally_soldier.gd::GDScript::6910494098035450570::1773999759::0::1::::<>CharacterBody2D<><>0<>0<><>::
 base_level.gd::GDScript::4401246210705364915::1773999759::0::1::::BaseLevel<>Node2D<><>0<>0<><>::
 boss_armored_vehicle.gd::GDScript::4355066946785542925::1773999759::0::1::::<>RefCounted<><>0<>0<><>::
@@ -138,10 +139,12 @@ level_5.gd::GDScript::7400900970684074711::1773999759::0::1::::<>Node2D<><>0<>0<
 level_select.gd::GDScript::2340662705807841668::1773999759::0::1::::<>Control<><>0<>0<><>::
 main_menu.gd::GDScript::6361267671101206735::1773999759::0::1::::<>Control<><>0<>0<><>::
 moving_platform.gd::GDScript::4571861790927412609::1773999759::0::1::::<>AnimatableBody2D<><>0<>0<><>::
-player.gd::GDScript::4697312809139379221::1774018423::0::1::::<>CharacterBody2D<><>0<>0<><>::
+player.gd::GDScript::4697312809139379221::1774027761::0::1::::<>CharacterBody2D<><>0<>0<><>::
 powerup.gd::GDScript::2997795159875025723::1773999759::0::1::::PowerUp<>Area2D<><>0<>0<><>::
 sniper_enemy.gd::GDScript::7515370082761501914::1773999759::0::1::::<>CharacterBody2D<><>0<>0<><>::
 story_screen.gd::GDScript::4467903770181930618::1773999759::0::1::::<>Control<><>0<>0<><>::
+tank_m48.gd::GDScript::8069070035356548789::1774028862::0::1::::<>CharacterBody2D<><>0<>0<><>::
+tank_t54.gd::GDScript::8490310479545367748::1774028860::0::1::::<>CharacterBody2D<><>0<>0<><>::
 tank_vehicle.gd::GDScript::7318708341314054499::1773999759::0::1::::<>CharacterBody2D<><>0<>0<><>::
 victory_screen.gd::GDScript::1445276829560148811::1773999759::0::1::::<>Control<><>0<>0<><>::
 ::res://scripts/autoload/::1774017845
