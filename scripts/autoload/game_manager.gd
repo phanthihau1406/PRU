@@ -8,7 +8,8 @@ enum GameState { MENU, STORY, PLAYING, PAUSED, VICTORY }
 var current_state: GameState = GameState.MENU
 var current_level: int = 0
 var score: int = 0
-var lives: int = 3
+var lives: int = 1
+var god_mode: bool = false
 var current_weapon: int = 0  # 0=rifle, 1=rocket
 var narration_enabled: bool = true
 var online_vi_tts_enabled: bool = true
@@ -42,11 +43,7 @@ var story_texts = {
 		"title": "CHIẾN DỊCH HỒ CHÍ MINH",
 		"lines": [
 			"Cuối tháng 4/1975, quân đội miền Bắc và lực lượng giải phóng",
-			"mở cuộc tổng tấn công vào Sài Gòn.",
-			"",
-			"Các mũi quân tiến vào từ nhiều hướng:",
-			"  → Tây Bắc    → Đông    → Đông Nam",
-			"  → Tây Nam    → Bắc",
+			"mở cuộc tấn công vào Sài Gòn.",
 			"",
 			"Mục tiêu: Bảo về xe tăng quân đồng minh."
 		]
@@ -58,7 +55,7 @@ var story_texts = {
 			"Xe tăng của quân giải phóng ào ạt tiến vào Sài Gòn.",
 			"",
 			"Phá hủy mọi chốt chặn trên đường,",
-			"vượt cầu, tiến thẳng đến Dinh Độc Lập.",
+			"tiến thẳng đến Dinh Độc Lập.",
 			"",
 			"Đích đến cuối cùng: Dinh Độc Lập!"
 		]

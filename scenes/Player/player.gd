@@ -12,7 +12,9 @@ signal weapon_changed(weapon_name: String)
 @export var gravity_force: float = 980.0
 @export var max_health: int = 10
 @export var max_fall_speed: float = 1000.0
+@export var topdown_mode: bool = false
 
+var in_tank: bool = false
 var health: int = 10
 var facing_right: bool = true
 var is_dead: bool = false
@@ -51,6 +53,9 @@ func _ready():
 	add_to_group("player")
 	collision_layer = 1
 	collision_mask = 1  # collide with terrain (layer 1)
+	if topdown_mode:
+		set_collision_mask_value(1, false)
+
 	weapon_changed.emit(GameManager.get_weapon_data().name)
 	_setup_audio()
 	
@@ -76,7 +81,10 @@ func _physics_process(delta: float) -> void:
 		return
 	
 	# --- Gravity ---
-	if not is_on_floor():
+	if topdown_mode and get_collision_mask_value(1):
+		set_collision_mask_value(1, false)
+		
+	if not is_on_floor() and not topdown_mode:
 		velocity.y += gravity_force * delta
 		velocity.y = minf(velocity.y, max_fall_speed)
 	
@@ -87,14 +95,22 @@ func _physics_process(delta: float) -> void:
 		speed_boost_timer -= delta
 	
 	var input_dir = Input.get_axis("move_left", "move_right")
+	var input_y = Input.get_axis("move_up", "move_down") if topdown_mode else 0.0
+	
 	if input_dir != 0:
 		velocity.x = input_dir * move_speed
 		facing_right = input_dir > 0
 	else:
 		velocity.x = move_toward(velocity.x, 0, move_speed * 5.0 * delta)
+		
+	if topdown_mode:
+		if input_y != 0:
+			velocity.y = input_y * move_speed
+		else:
+			velocity.y = move_toward(velocity.y, 0, move_speed * 5.0 * delta)
 	
 	# --- Jump ---
-	if Input.is_action_just_pressed("jump") and is_on_floor():
+	if Input.is_action_just_pressed("jump") and is_on_floor() and not topdown_mode:
 		velocity.y = jump_force
 	
 	# --- Weapon controls ---
@@ -150,14 +166,16 @@ func _update_animation():
 	# Flip sprite based on facing direction
 	anim_sprite.flip_h = not facing_right
 	
+	var is_moving = abs(velocity.x) > 10 or (topdown_mode and abs(velocity.y) > 10)
+	
 	# Choose animation
 	if is_shooting:
 		if anim_sprite.animation != "shoot":
 			anim_sprite.play("shoot")
-	elif not is_on_floor():
+	elif not is_on_floor() and not topdown_mode:
 		if anim_sprite.animation != "jump":
 			anim_sprite.play("jump")
-	elif abs(velocity.x) > 10:
+	elif is_moving:
 		if anim_sprite.animation != "run":
 			anim_sprite.play("run")
 	else:
@@ -186,7 +204,7 @@ func shoot():
 		ammo_in_mag[widx] = maxi(0, int(ammo_in_mag.get(widx, int(weapon.mag_size))) - 1)
 
 func take_damage(amount: int = 1):
-	if invincible or shield_active or is_dead:
+	if invincible or shield_active or is_dead or GameManager.god_mode:
 		return
 	health = max(health - max(1, amount), 0)
 	health_changed.emit(health)
@@ -233,18 +251,6 @@ func _init_magazines():
 		ammo_in_mag[i] = int(w.mag_size)
 
 func _handle_weapon_controls(delta: float):
-	if Input.is_action_just_pressed("weapon_next"):
-		GameManager.next_weapon()
-		is_reloading = false
-		reload_timer = 0.0
-		weapon_changed.emit(GameManager.get_weapon_data().name)
-	
-	if Input.is_action_just_pressed("weapon_prev"):
-		GameManager.prev_weapon()
-		is_reloading = false
-		reload_timer = 0.0
-		weapon_changed.emit(GameManager.get_weapon_data().name)
-	
 	if Input.is_action_just_pressed("reload"):
 		_start_reload()
 	

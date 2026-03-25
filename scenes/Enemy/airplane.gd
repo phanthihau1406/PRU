@@ -1,4 +1,4 @@
-extends Node2D
+extends CharacterBody2D
 
 ## Enemy Airplane - Patrols, detects player, chases and SHOOTS at player
 ## Uses AnimatedSprite2D: fly
@@ -7,7 +7,7 @@ extends Node2D
 signal enemy_died(enemy)
 
 @export var speed: float = 160.0
-@export var health: float = 10.0
+@export var health: float = 100.0
 @export var damage: int = 2
 @export var patrol_min_x: float = 100.0
 @export var patrol_max_x: float = 1500.0
@@ -15,6 +15,7 @@ signal enemy_died(enemy)
 @export var detection_range: float = 500.0
 @export var chase_speed: float = 200.0
 @export var shoot_cooldown: float = 1.5
+@export var topdown_mode: bool = false
 
 enum State { PATROL, CHASE, DEAD }
 var state: State = State.PATROL
@@ -32,9 +33,26 @@ func _ready():
 	
 	if patrol_y == -80.0:
 		patrol_y = global_position.y
+		
+	# Automatically calculate patrol range for manually placed airplanes
+	if abs(patrol_min_x - 100.0) < 0.1 and abs(patrol_max_x - 1500.0) < 0.1:
+		patrol_min_x = global_position.x - 500.0
+		patrol_max_x = global_position.x + 500.0
 	
 	if anim_sprite:
 		anim_sprite.play("fly_right")
+
+func _process(delta):
+	queue_redraw()
+
+func _draw():
+	if health < 100.0 and health > 0:
+		var bar_w = 60.0
+		var bar_h = 6.0
+		var bar_x = -bar_w / 2
+		var bar_y = -35.0
+		draw_rect(Rect2(bar_x, bar_y, bar_w, bar_h), Color(0.2, 0.0, 0.0))
+		draw_rect(Rect2(bar_x, bar_y, bar_w * (max(health, 0) / 100.0), bar_h), Color(0.1, 0.8, 0.2))
 
 func _physics_process(delta):
 	if state == State.DEAD:
@@ -121,6 +139,8 @@ func _fire_at_player(_player: Node2D):
 	get_tree().current_scene.add_child(bomb)
 
 func _check_line_of_sight(player: Node2D) -> bool:
+	if topdown_mode: return true
+	
 	# Cast a ray from airplane DOWN to the player
 	# If a TileMap tile blocks the ray, player is hiding under cover
 	var space_state = get_world_2d().direct_space_state

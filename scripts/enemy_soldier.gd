@@ -12,6 +12,7 @@ signal enemy_died(enemy)
 @export var shoot_range: float = 300.0
 @export var patrol_distance: float = 150.0
 @export var enemy_color: Color = Color(0.5, 0.45, 0.35)  # Khaki
+@export var topdown_mode: bool = false
 
 enum State { PATROL, CHASE, SHOOT, DEAD }
 var state: State = State.PATROL
@@ -31,13 +32,19 @@ func _ready():
 	add_to_group("enemies")
 	z_index = 5
 	scale = Vector2(1.5, 1.5)
+	
+	if topdown_mode:
+		set_collision_mask_value(1, false)
 
 func _physics_process(delta):
 	if state == State.DEAD:
 		return
+		
+	if topdown_mode and get_collision_mask_value(1):
+		set_collision_mask_value(1, false)
 	
 	# Gravity
-	if not is_on_floor():
+	if not is_on_floor() and not topdown_mode:
 		velocity.y += gravity * delta
 	
 	# Find player
@@ -97,9 +104,18 @@ func _chase(player: Node2D, _delta):
 		facing_right = false
 	else:
 		velocity.x = 0
+		
+	if topdown_mode:
+		if player.global_position.y > global_position.y + 10:
+			velocity.y = speed * 1.3
+		elif player.global_position.y < global_position.y - 10:
+			velocity.y = -speed * 1.3
+		else:
+			velocity.y = 0
 
 func _shoot_at(player: Node2D, delta):
 	velocity.x = 0
+	if topdown_mode: velocity.y = 0
 	facing_right = player.global_position.x > global_position.x
 	
 	shoot_timer -= delta

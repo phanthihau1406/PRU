@@ -3,7 +3,9 @@ extends CharacterBody2D
 signal tank_destroyed
 
 @export var max_health: float = 30.0
+@export var topdown_mode: bool = false
 var current_health: float
+var speed: float = 35.0
 var is_dead: bool = false
 var shoot_timer: float = 0.0
 var shoot_cooldown: float = 2.5
@@ -29,14 +31,17 @@ func _ready():
 	# Add Shooting Sound
 	sfx_shoot = AudioStreamPlayer2D.new()
 	sfx_shoot.stream = load("res://assets/audio/tiengNo.mp3")
-	sfx_shoot.volume_db = -5.0
+	sfx_shoot.volume_db = 2.0
 	sfx_shoot.pitch_scale = 1.2
 	add_child(sfx_shoot)
 
 func _physics_process(delta):
 	if is_dead: return
 	
-	if not is_on_floor():
+	if topdown_mode and get_collision_mask_value(1):
+		set_collision_mask_value(1, false)
+		
+	if not is_on_floor() and not topdown_mode:
 		velocity.y += 900.0 * delta
 		
 	# Find targets (player or allied tank)
@@ -55,6 +60,14 @@ func _physics_process(delta):
 	if closest_target:
 		anim.play("shoot_left")
 		velocity.x = 0
+		if topdown_mode:
+			if closest_target.global_position.y > global_position.y + 10:
+				velocity.y = speed
+			elif closest_target.global_position.y < global_position.y - 10:
+				velocity.y = -speed
+			else:
+				velocity.y = 0
+				
 		shoot_timer -= delta
 		if shoot_timer <= 0:
 			_shoot()
@@ -62,6 +75,7 @@ func _physics_process(delta):
 	else:
 		anim.play("run_left")
 		velocity.x = 0 # stays stationary if no target
+		if topdown_mode: velocity.y = 0
 		
 	move_and_slide()
 
@@ -99,3 +113,8 @@ func die():
 	if sfx_shoot:
 		sfx_shoot.pitch_scale = 0.5
 		sfx_shoot.play()
+
+	var tw = create_tween()
+	tw.tween_interval(1.5)
+	tw.tween_property(self, "modulate:a", 0.0, 1.0)
+	tw.tween_callback(queue_free)

@@ -24,6 +24,7 @@ signal weapon_changed(weapon_name: String)
 @export var roll_duration: float = 0.32
 
 var health: int = 10
+@export var topdown_mode: bool = false
 var aim_direction: Vector2 = Vector2.RIGHT
 var facing_right: bool = true
 var is_shooting: bool = false
@@ -81,6 +82,9 @@ func _ready():
 	infinite_ammo_timer = 0.0
 	_setup_audio()
 	scale = Vector2(1.5, 1.5)
+	
+	if topdown_mode:
+		set_collision_mask_value(1, false)
 
 
 func _physics_process(delta):
@@ -89,9 +93,13 @@ func _physics_process(delta):
 		return
 	if in_tank:
 		return
+		
+	# Update collision mask dynamically if topdown_mode is toggled
+	if topdown_mode and get_collision_mask_value(1):
+		set_collision_mask_value(1, false)
 	
 	# Gravity
-	if not is_on_floor():
+	if not is_on_floor() and not topdown_mode:
 		var g = gravity
 		if velocity.y > 0.0:
 			g *= fall_gravity_multiplier
@@ -100,27 +108,38 @@ func _physics_process(delta):
 	
 	# Movement
 	var move_speed = speed
-	if is_on_floor() and absf(Input.get_axis("move_left", "move_right")) > 0.01:
+	var is_grounded = is_on_floor() or topdown_mode
+	if is_grounded and absf(Input.get_axis("move_left", "move_right")) > 0.01:
 		move_speed *= 1.08
 	if speed_boost_timer > 0:
 		move_speed *= 1.5
 		speed_boost_timer -= delta
 	
 	var input_dir = Input.get_axis("move_left", "move_right")
+	var input_y = Input.get_axis("move_up", "move_down") if topdown_mode else 0.0
+	
 	if is_rolling:
 		roll_timer -= delta
 		velocity.x = roll_dir * roll_speed
+		if topdown_mode: velocity.y = 0
 		if roll_timer <= 0.0:
 			is_rolling = false
 	else:
 		var target_x = input_dir * move_speed
 		if absf(input_dir) > 0.01:
-			var accel = accel_ground if is_on_floor() else accel_air
+			var accel = accel_ground if is_grounded else accel_air
 			if absf(velocity.x) > 40.0 and signf(velocity.x) != signf(target_x):
 				accel *= 1.6
 			velocity.x = move_toward(velocity.x, target_x, accel * delta)
 		else:
 			velocity.x = move_toward(velocity.x, 0.0, decel_ground * delta)
+			
+		if topdown_mode:
+			var target_y = input_y * move_speed
+			if absf(input_y) > 0.01:
+				velocity.y = move_toward(velocity.y, target_y, accel_ground * delta)
+			else:
+				velocity.y = move_toward(velocity.y, 0.0, decel_ground * delta)
 	
 	if input_dir > 0:
 		facing_right = true
@@ -128,7 +147,7 @@ func _physics_process(delta):
 		facing_right = false
 
 	# Footsteps
-	if is_on_floor() and absf(velocity.x) > 30.0 and not is_rolling:
+	if is_grounded and (absf(velocity.x) > 30.0 or (topdown_mode and absf(velocity.y) > 30.0)) and not is_rolling:
 		step_timer -= delta
 		if step_timer <= 0.0:
 			_play_step()
@@ -138,7 +157,7 @@ func _physics_process(delta):
 	
 	# Jump helpers
 	jump_just_started = false
-	if is_on_floor():
+	if is_grounded:
 		jumps_left = max_jumps
 		double_jump_pose_timer = 0.0
 		coyote_timer = coyote_time
@@ -153,7 +172,12 @@ func _physics_process(delta):
 		jump_buffer_timer = maxf(0.0, jump_buffer_timer - delta)
 
 	# Contra-like roll: press down + jump on ground
-	if is_on_floor() and Input.is_action_pressed("move_down") and Input.is_action_just_pressed("jump"):
+	if is_grounded and Input.is_action_pressed("move_down") and Input.is_action_just_pressed("jump") and not topdown_mode:
+		is_rolling = true
+		roll_timer = roll_duration
+		roll_dir = 1.0 if facing_right else -1.0
+		jump_buffer_timer = 0.0
+	elif topdown_mode and Input.is_action_just_pressed("jump"): # Simple dodge in topdown
 		is_rolling = true
 		roll_timer = roll_duration
 		roll_dir = 1.0 if facing_right else -1.0
@@ -234,7 +258,7 @@ func _physics_process(delta):
 		anim_timer = 0
 
 	# Landing squish
-	var on_floor_now = is_on_floor()
+	var on_floor_now = is_grounded
 	if on_floor_now and not was_on_floor:
 		land_bounce = 0.35
 	was_on_floor = on_floor_now
@@ -242,10 +266,10 @@ func _physics_process(delta):
 		land_bounce -= delta * 3.0
 
 	# Crouch when pressing down on ground
-	is_crouching = Input.is_action_pressed("move_down") and is_on_floor() and not is_rolling
+	is_crouching = Input.is_action_pressed("move_down") and is_grounded and not is_rolling and not topdown_mode
 
 	# Idle breath timer
-	if abs(velocity.x) < 10 and is_on_floor():
+	if abs(velocity.x) < 10 and (not topdown_mode or abs(velocity.y) < 10) and is_grounded:
 		idle_time += delta
 	else:
 		idle_time = 0.0
@@ -441,7 +465,8 @@ func _draw():
 	var col_bandolier = Color("#4a3a20") # Dây đạn chéo
 
 	var dir = 1 if facing_right else -1
-	var speed_ratio = clampf(abs(velocity.x) / max(speed, 1.0), 0.0, 1.0)
+	var move_speed_ratio = (abs(velocity.x) + (abs(velocity.y) if topdown_mode else 0.0)) / max(speed, 1.0)
+	var speed_ratio = clampf(move_speed_ratio, 0.0, 1.0)
 	var idle_sway = sin(idle_time * 2.0) * 0.6
 	var sway = sin(anim_timer * 1.4) * (1.6 * speed_ratio) + idle_sway * (1.0 - speed_ratio)
 	var bob = sin(anim_timer * 1.2) * (1.4 * speed_ratio)

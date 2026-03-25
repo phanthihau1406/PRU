@@ -12,6 +12,7 @@ signal enemy_died(enemy)
 @export var detection_range: float = 350.0
 @export var shoot_range: float = 300.0
 @export var patrol_distance: float = 150.0
+@export var topdown_mode: bool = false
 
 enum State { PATROL, CHASE, SHOOT, DEAD }
 var state: State = State.PATROL
@@ -35,7 +36,7 @@ func _ready():
 	
 	sfx_shoot = AudioStreamPlayer2D.new()
 	sfx_shoot.stream = load("res://assets/audio/ak47_fire.mp3")
-	sfx_shoot.volume_db = -18.0
+	sfx_shoot.volume_db = -8.0
 	add_child(sfx_shoot)
 	
 	# Ensure CollisionShape2D exists
@@ -66,7 +67,10 @@ func _physics_process(delta):
 		return
 	
 	# Gravity
-	if not is_on_floor():
+	if topdown_mode and get_collision_mask_value(1):
+		set_collision_mask_value(1, false)
+		
+	if not is_on_floor() and not topdown_mode:
 		velocity.y += gravity_force * delta
 	
 	# Find player
@@ -104,6 +108,7 @@ func _physics_process(delta):
 func _patrol(_delta):
 	var dir = 1 if facing_right else -1
 	velocity.x = speed * dir
+	if topdown_mode: velocity.y = 0
 	
 	if global_position.x > patrol_origin + patrol_distance:
 		facing_right = false
@@ -119,9 +124,18 @@ func _chase(player: Node2D, _delta):
 		facing_right = false
 	else:
 		velocity.x = 0
+		
+	if topdown_mode:
+		if player.global_position.y > global_position.y + 10:
+			velocity.y = speed * 1.3
+		elif player.global_position.y < global_position.y - 10:
+			velocity.y = -speed * 1.3
+		else:
+			velocity.y = 0
 
 func _shoot_at(player: Node2D, delta):
 	velocity.x = 0
+	if topdown_mode: velocity.y = 0
 	facing_right = player.global_position.x > global_position.x
 	
 	shoot_timer -= delta
@@ -129,11 +143,11 @@ func _shoot_at(player: Node2D, delta):
 		_fire_bullet(player)
 		shoot_timer = shoot_cooldown
 
-func _fire_bullet(player: Node2D):
+func _fire_bullet(_player: Node2D):
 	if not bullet_scene:
 		return
 	var bullet = bullet_scene.instantiate()
-	var dir = (player.global_position - global_position).normalized()
+	var dir = Vector2.RIGHT if facing_right else Vector2.LEFT
 	bullet.setup(global_position + dir * 20, dir, 350, damage, Color(1, 0.6, 0.1), false)
 	get_tree().current_scene.add_child(bullet)
 	if sfx_shoot:

@@ -3,6 +3,9 @@
 [ext_resource type="Texture2D" uid="uid://bikbrkxyar5gs" path="res://assets/sprites/enemy/mayBay-removebg-preview.png" id="1_ln6wt"]
 [ext_resource type="Script" uid="uid://h6jklak1m4ih" path="res://scenes/Enemy/airplane.gd" id="2_script"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hit"]
+size = Vector2(120, 40)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_rybwn"]
 atlas = ExtResource("1_ln6wt")
 region = Rect2(0, 0, 166, 166)
@@ -100,8 +103,13 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Plan" type="Node2D" unique_id=1131624227]
+[node name="Plan" type="CharacterBody2D" unique_id=1131624227]
+collision_layer = 2
+collision_mask = 0
 script = ExtResource("2_script")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_hit")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1151393099]
 scale = Vector2(0.8, 0.8)

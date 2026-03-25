@@ -13,7 +13,7 @@ func _ready():
 func _setup_audio():
 	bg_music = AudioStreamPlayer.new()
 	bg_music.stream = load("res://assets/audio/backgroundSound.mp3") # Keep using backgroundSound.mp3 for now
-	bg_music.volume_db = -10.0
+	bg_music.volume_db = -4.0
 	bg_music.process_mode = Node.PROCESS_MODE_ALWAYS
 	bg_music.finished.connect(func(): bg_music.play()) # LOOP MUSIC
 	add_child(bg_music)
@@ -115,13 +115,23 @@ func _show_end_screen(msg: String, is_win: bool):
 			get_tree().reload_current_scene()
 		)
 		btn_hbox.add_child(btn_retry)
-	
-	var btn_menu = Button.new()
-	btn_menu.text = " MÀN HÌNH CHÍNH "
-	btn_menu.add_theme_font_size_override("font_size", 28)
-	btn_menu.pressed.connect(func(): 
-		get_tree().paused = false
-		get_tree().change_scene_to_file("res://scenes/ui/main_menu.tscn")
-	)
-	btn_hbox.add_child(btn_menu)
+		
+		var btn_menu = Button.new()
+		btn_menu.text = " MÀN HÌNH CHÍNH "
+		btn_menu.add_theme_font_size_override("font_size", 28)
+		btn_menu.pressed.connect(func(): 
+			get_tree().paused = false
+			GameManager.go_to_menu()
+		)
+		btn_hbox.add_child(btn_menu)
+	else:
+		var btn_next = Button.new()
+		btn_next.text = " TIẾP TỤC (MÀN 3) "
+		btn_next.add_theme_font_size_override("font_size", 28)
+		btn_next.pressed.connect(func(): 
+			get_tree().paused = false
+			GameManager.current_level = 1
+			GameManager.complete_level()
+		)
+		btn_hbox.add_child(btn_next)
 

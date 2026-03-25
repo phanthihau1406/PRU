@@ -91,8 +91,7 @@ func _bind_player_if_needed():
 func update_hud():
 	if GameManager:
 		var w_data = GameManager.get_weapon_data()
-		weapon_label.text = "Vũ khí: " + w_data.name + " | Q/E đổi súng, R thay đạn"
-		weapon_label.add_theme_color_override("font_color", w_data.color)
+		weapon_label.visible = false
 
 		if player and player.has_method("get_ammo_current") and player.has_method("get_ammo_max"):
 			var ammo_curr = player.get_ammo_current()
@@ -107,7 +106,7 @@ func update_hud():
 		if player and "health" in player:
 			hp_bar.value = player.health
 		
-		score_label.text = "Điểm: %06d" % GameManager.score
+		score_label.visible = false
 
 func _on_health_changed(new_health: int):
 	hp_bar.value = new_health

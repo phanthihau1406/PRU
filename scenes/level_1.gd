@@ -34,7 +34,7 @@ func _setup_level_bgm(path: String = "res://assets/audio/game_background_music1.
 
 func _ready():
 	# Nhạc nền nhỏ
-	_setup_level_bgm("res://assets/audio/backgroundSound.mp3", -15.0)
+	_setup_level_bgm("res://assets/audio/backgroundSound.mp3", -8.0)
 
 	# Find the player (placed in editor)
 	player = _find_node_by_type("CharacterBody2D", "player")

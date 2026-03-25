@@ -8,7 +8,7 @@ class_name BaseLevel
 @export var level_music: String = ""
 
 var hud_scene = preload("res://scenes/ui/hud.tscn")
-var player_scene = preload("res://scenes/objects/player.tscn")
+var player_scene = preload("res://scenes/Player/PLayer.tscn")
 
 var player: Node2D
 var hud: CanvasLayer
@@ -60,12 +60,64 @@ func setup_level():
 	pass
 
 func _on_player_died():
-	if GameManager.lives > 0:
-		hud.show_message("ĐÃ HY SINH!\nCòn %d mạng" % GameManager.lives, 2.0)
-		await get_tree().create_timer(2.0).timeout
-		respawn_player()
-	else:
-		hud.show_message("GAME OVER", 3.0)
+	get_tree().paused = true
+	
+	var overlay = CanvasLayer.new()
+	overlay.layer = 100
+	overlay.process_mode = Node.PROCESS_MODE_ALWAYS
+	get_tree().current_scene.add_child(overlay)
+	
+	var control = Control.new()
+	overlay.add_child(control)
+	var vp_size = get_viewport_rect().size
+	control.size = vp_size
+	
+	var panel = ColorRect.new()
+	panel.color = Color(0.2, 0.0, 0.0, 0.85) # Dark red overlay
+	panel.size = vp_size
+	control.add_child(panel)
+	
+	var center = CenterContainer.new()
+	center.size = vp_size
+	control.add_child(center)
+	
+	var vbox = VBoxContainer.new()
+	vbox.add_theme_constant_override("separation", 30)
+	vbox.alignment = BoxContainer.ALIGNMENT_CENTER
+	center.add_child(vbox)
+	
+	var title = Label.new()
+	title.text = "ĐỒNG CHÍ ĐÃ CỐ GẮNG"
+	title.add_theme_font_size_override("font_size", 48)
+	title.add_theme_color_override("font_color", Color(1.0, 0.3, 0.2))
+	title.add_theme_color_override("font_shadow_color", Color.BLACK)
+	title.add_theme_constant_override("shadow_offset_x", 3)
+	title.add_theme_constant_override("shadow_offset_y", 3)
+	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	vbox.add_child(title)
+	
+	var btn_hbox = HBoxContainer.new()
+	btn_hbox.alignment = BoxContainer.ALIGNMENT_CENTER
+	btn_hbox.add_theme_constant_override("separation", 40)
+	vbox.add_child(btn_hbox)
+	
+	var btn_retry = Button.new()
+	btn_retry.text = " CHƠI LẠI "
+	btn_retry.add_theme_font_size_override("font_size", 28)
+	btn_retry.pressed.connect(func(): 
+		get_tree().paused = false
+		get_tree().reload_current_scene()
+	)
+	btn_hbox.add_child(btn_retry)
+	
+	var btn_menu = Button.new()
+	btn_menu.text = " MÀN HÌNH CHÍNH "
+	btn_menu.add_theme_font_size_override("font_size", 28)
+	btn_menu.pressed.connect(func(): 
+		get_tree().paused = false
+		GameManager.go_to_menu()
+	)
+	btn_hbox.add_child(btn_menu)
 
 func respawn_player():
 	var start_pos = Vector2(100, 500)

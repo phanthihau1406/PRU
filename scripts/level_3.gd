@@ -4,7 +4,8 @@ extends "res://scripts/base_level.gd"
 ## Địa hình đồi dốc, nhiều vị trí bắn tỉa và xe tăng chốt giữ.
 
 var airplane_scene = preload("res://scenes/objects/enemy_airplane.tscn")
-var tank_scene = preload("res://scenes/objects/tank_vehicle.tscn")
+var tank_ally_scene = preload("res://scenes/objects/tank_t-54.tscn")
+var tank_enemy_scene = preload("res://scenes/objects/tank_m-48.tscn")
 var prop_scene = preload("res://scenes/objects/destructible_prop.tscn")
 var powerup_scene = preload("res://scenes/objects/powerup.tscn")
 var building_boss_scene = preload("res://scenes/objects/boss_building.tscn")
@@ -30,48 +31,61 @@ var _wind_time: float = 0.0
 func setup_level():
 	level_name = "MÀN 3: CAO NGUYÊN LỬA"
 
-	# Sóng địch rải đều theo địa hình
-	for px in [400, 750, 1100, 1500, 1900, 2300, 2700, 3100, 3500]:
-		_spawn_soldier(Vector2(float(px), _ground_y(float(px)) - 14.0))
-
-	# Xe tăng chốt giữ
-	for px in [1200, 2400, 3600]:
-		_spawn_tank(Vector2(float(px), _ground_y(float(px)) - 10.0))
-
-	# Không kích
-	_spawn_airplane(Vector2(1400, 160), 900.0, 2200.0)
-	_spawn_airplane(Vector2(3000, 170), 2400.0, 4000.0)
-
-	# Vật cản và power-ups
-	for px in [800, 2000, 3200]:
-		_spawn_prop(Vector2(float(px), _ground_y(float(px)) - 10.0), DestructibleProp.PropType.BARREL)
-	_spawn_powerup(Vector2(1800, _ground_y(1800) - 30.0), PowerUp.PowerType.HEALTH)
-	_spawn_powerup(Vector2(3400, _ground_y(3400) - 30.0), PowerUp.PowerType.WEAPON_UP)
-
-	# Boss cửa ngõ
-	var boss = building_boss_scene.instantiate()
-	boss.global_position = Vector2(3900, _ground_y(3900) - 20)
-	boss.boss_defeated.connect(_on_boss_defeated)
-	add_child(boss)
 
 func _ready():
 	super._ready()
-	_setup_level_bgm("res://assets/audio/game_background_music1.mp3", -10.0)
+	_setup_level_bgm("res://assets/audio/backgroundSound.mp3", -10.0)
+	
+	# base_level.gd spawned a `player`. Let's see if a manual one exists.
+	var all_players = get_tree().get_nodes_in_group("player")
+	var manual_player = null
+	for p in all_players:
+		if p != player:
+			manual_player = p
+			break
+	
+	if manual_player:
+		if is_instance_valid(player):
+			player.queue_free()
+		player = manual_player
+		if not player.player_died.is_connected(_on_player_died):
+			player.player_died.connect(_on_player_died)
+	
+	if player and "topdown_mode" in player:
+		player.topdown_mode = true
+		
+	# Bật topdown_mode cho tất cả xe tăng và kẻ địch được đặt thủ công trên bản đồ
+	for node in get_tree().get_nodes_in_group("enemies") + get_tree().get_nodes_in_group("allies"):
+		if "topdown_mode" in node:
+			node.topdown_mode = true
+			
 	queue_redraw()
+
+var victory_triggered: bool = false
 
 func _process(delta):
 	_wind_time += delta
 	queue_redraw()
+	
+	if not victory_triggered and player and is_instance_valid(player):
+		if player.global_position.x >= 8900.0:
+			victory_triggered = true
+			var vz = preload("res://scenes/objects/VictoryZone.tscn").instantiate()
+			add_child(vz)
+			vz._trigger_victory()
 
-func _spawn_soldier(pos: Vector2):
-	var enemy_scene = load("res://scenes/objects/enemy_soldier.tscn")
-	var enemy = enemy_scene.instantiate()
-	enemy.global_position = pos
-	add_child(enemy)
-
-func _spawn_tank(pos: Vector2):
-	var tank = tank_scene.instantiate()
+func _spawn_tank_ally(pos: Vector2):
+	var tank = tank_ally_scene.instantiate()
 	tank.global_position = pos
+	if "topdown_mode" in tank:
+		tank.topdown_mode = true
+	add_child(tank)
+
+func _spawn_tank_enemy(pos: Vector2):
+	var tank = tank_enemy_scene.instantiate()
+	tank.global_position = pos
+	if "topdown_mode" in tank:
+		tank.topdown_mode = true
 	add_child(tank)
 
 func _spawn_airplane(pos: Vector2, mn: float, mx: float):
@@ -108,12 +122,7 @@ func _ground_y(x: float) -> float:
 	return TERRAIN_TOP[TERRAIN_TOP.size() - 1].y
 
 func _draw():
-	_draw_sky()
-	_draw_far_mountains()
-	_draw_near_ridges()
-	_draw_ground()
-	_draw_fog()
-	_draw_props()
+	pass
 
 func _draw_sky():
 	draw_rect(Rect2(-1000, -800, 6000, 1600), Color(0.32, 0.50, 0.62))
@@ -156,9 +165,9 @@ func _draw_fog():
 func _draw_props():
 	# Hàng rào và đá
 	for x in [500, 1200, 1900, 2600, 3300, 3900]:
-		_draw_rock(Vector2(float(x), _ground_y(float(x)) + 6))
+		_draw_rock(Vector2(float(x), randf_range(400, 700)))
 	for x in [800, 1600, 2400, 3200, 4000]:
-		_draw_post(Vector2(float(x), _ground_y(float(x)) - 5))
+		_draw_post(Vector2(float(x), randf_range(400, 700)))
 
 func _draw_cloud(pos: Vector2):
 	draw_circle(pos, 32, Color(1, 1, 1, 0.35))

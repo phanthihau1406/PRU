@@ -128,6 +128,26 @@ func _add_settings_popup():
 	mute_btn.text = "MUTE"
 	vol_row.add_child(mute_btn)
 	
+	var god_row = HBoxContainer.new()
+	god_row.position = Vector2(40, 140)
+	god_row.size = Vector2(440, 40)
+	god_row.add_theme_constant_override("separation", 12)
+	panel.add_child(god_row)
+	
+	var god_lbl = Label.new()
+	god_lbl.text = "GOD MODE (BAT TU)"
+	god_lbl.add_theme_color_override("font_color", Color(0.9, 0.9, 0.9))
+	god_lbl.add_theme_font_size_override("font_size", 18)
+	god_lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	god_row.add_child(god_lbl)
+	
+	var god_check = CheckBox.new()
+	god_check.button_pressed = GameManager.god_mode
+	god_check.toggled.connect(func(val: bool):
+		GameManager.god_mode = val
+	)
+	god_row.add_child(god_check)
+	
 	var bus_index = _get_master_bus_index()
 	var current_db = AudioServer.get_bus_volume_db(bus_index)
 	vol_slider.value = _db_to_linear(current_db)

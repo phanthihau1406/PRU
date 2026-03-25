@@ -232,6 +232,7 @@ value = 100.0
 show_percentage = false
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1907943219]
+position = Vector2(0, 18)
 sprite_frames = SubResource("SpriteFrames_j0ti3")
 animation = &"shoot_right"
 frame_progress = 0.6929916

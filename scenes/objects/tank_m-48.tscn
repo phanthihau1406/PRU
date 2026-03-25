@@ -198,6 +198,7 @@ value = 100.0
 show_percentage = false
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1955166483]
+position = Vector2(0, 18)
 sprite_frames = SubResource("SpriteFrames_ta8vb")
 animation = &"shoot_right"
 frame_progress = 0.73985606

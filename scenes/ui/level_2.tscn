@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://b66ohyqmygnmu"]
 
-[ext_resource type="Texture2D" uid="uid://do1ddfmwjhykt" path="res://assets/sprites/Tiles.png" id="1_2rhhp"]
+[ext_resource type="Texture2D" uid="uid://do1ddfmwjhykt" path="res://assets/tilemap/Tiles.png" id="1_2rhhp"]
 [ext_resource type="PackedScene" uid="uid://64simpk36wlo" path="res://scenes/Player/PLayer.tscn" id="3_e03st"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fuofl"]

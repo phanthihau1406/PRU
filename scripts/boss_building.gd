@@ -14,7 +14,7 @@ var spawn_timer: float = 3.0
 var flash_timer: float = 0.0
 
 var bullet_scene = preload("res://scenes/objects/bullet.tscn")
-var enemy_scene = preload("res://scenes/objects/enemy_soldier.tscn")
+var enemy_scene = preload("res://scenes/Enemy/Enemy.tscn")
 
 func _ready():
 	health = max_health
@@ -66,6 +66,8 @@ func _spawn_guard():
 	if not enemy_scene: return
 	var enemy = enemy_scene.instantiate()
 	enemy.global_position = global_position + Vector2(-100, 0)
+	if "topdown_mode" in enemy:
+		enemy.topdown_mode = true
 	get_tree().current_scene.add_child(enemy)
 
 func take_damage(amount: float):
