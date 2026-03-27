@@ -3,11 +3,14 @@ extends Area2D
 var speed: float = 200.0
 var damage: int = 2
 var is_exploded: bool = false
+var has_damaged_player: bool = false
+@export var bottom_explode_y: float = 700.0
 
 @onready var sprite = $AnimatedSprite2D
 @onready var sfx_no = $SfxNo
 
 func _ready():
+	monitoring = true
 	body_entered.connect(_on_body_entered)
 	if sprite:
 		sprite.stop()
@@ -17,6 +20,11 @@ func _process(delta):
 	if is_exploded:
 		return
 	position.y += speed * delta
+
+	# Level 1 request: only explode when the bomb reaches ground/bottom area.
+	if global_position.y >= bottom_explode_y:
+		_explode()
+		return
 	
 	if position.y > 2000.0:
 		queue_free()
@@ -25,11 +33,12 @@ func _on_body_entered(body):
 	if is_exploded:
 		return
 		
-	if body.is_in_group("player"):
+	if body.is_in_group("player") and not has_damaged_player:
+		has_damaged_player = true
 		if body.has_method("take_damage"):
 			body.take_damage(damage)
-	
-	_explode()
+
+	# Do not explode on collision in mid-air; keep falling to bottom_explode_y.
 
 func _explode():
 	is_exploded = true

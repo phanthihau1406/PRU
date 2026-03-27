@@ -104,6 +104,13 @@ func start_typing_next_line():
 	# If user skipped while waiting, don't resume typing
 	if current_line >= story_data["lines"].size():
 		return
+
+	# Avoid cutting previous line narration when moving to next line.
+	while _is_narration_active() and current_line < story_data["lines"].size():
+		await get_tree().create_timer(0.08).timeout
+	if current_line >= story_data["lines"].size():
+		return
+
 	_narrate_line(story_data["lines"][current_line])
 	char_index = 0
 	is_typing = true
@@ -196,6 +203,13 @@ func _stop_narration():
 		narration_player.stop()
 	if tts_available:
 		DisplayServer.tts_stop()
+
+func _is_narration_active() -> bool:
+	if narration_player and narration_player.playing:
+		return true
+	if tts_available and DisplayServer.tts_is_speaking():
+		return true
+	return false
 
 func _setup_narration_nodes():
 	narration_player = AudioStreamPlayer.new()

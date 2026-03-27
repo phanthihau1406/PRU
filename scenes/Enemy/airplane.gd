@@ -15,6 +15,7 @@ signal enemy_died(enemy)
 @export var detection_range: float = 500.0
 @export var chase_speed: float = 200.0
 @export var shoot_cooldown: float = 1.5
+@export var chase_turn_deadzone: float = 80.0
 @export var topdown_mode: bool = false
 
 enum State { PATROL, CHASE, DEAD }
@@ -92,6 +93,7 @@ func _physics_process(delta):
 				else:
 					# Continue flying in last direction
 					global_position.x += direction * speed * delta
+					global_position.y = patrol_y
 	
 	# Update sprite direction and animation
 	if anim_sprite:
@@ -113,10 +115,10 @@ func _patrol(delta):
 		direction = 1.0
 
 func _chase(player: Node2D, delta):
-	if player.global_position.x > global_position.x:
-		direction = 1.0
-	else:
-		direction = -1.0
+	var dx = player.global_position.x - global_position.x
+	# Keep moving through bombing runs; only turn when player is far enough on one side.
+	if abs(dx) > chase_turn_deadzone:
+		direction = 1.0 if dx > 0.0 else -1.0
 	
 	global_position.x += direction * chase_speed * delta
 	global_position.y = patrol_y

@@ -11,14 +11,14 @@ signal crashed(pos: Vector2)
 var direction: float = 1.0
 var patrol_min_x: float = 100.0
 var patrol_max_x: float = 3900.0
-var bomb_timer: float = 2.5
+
 var flash_timer: float = 0.0
 var prop_angle: float = 0.0
 var smoke_trail: Array = []
 var is_falling: bool = false
 var fall_velocity: Vector2 = Vector2.ZERO
 
-var bullet_scene = preload("res://scenes/objects/bullet.tscn")
+
 
 func _ready():
 	add_to_group("enemies")
@@ -33,7 +33,6 @@ func _physics_process(delta):
 		return
 	prop_angle  += delta * 28.0
 	flash_timer  = maxf(0.0, flash_timer - delta)
-	bomb_timer  -= delta
 
 	# Horizontal patrol
 	position.x += direction * speed * delta
@@ -45,9 +44,6 @@ func _physics_process(delta):
 	# Slight sine wave altitude drift
 	position.y += sin(Time.get_ticks_msec() / 900.0) * 0.4
 
-	if bomb_timer <= 0.0:
-		_drop_bomb()
-		bomb_timer = randf_range(2.8, 5.2)
 
 	# Smoke trail
 	smoke_trail.append({"pos": global_position + Vector2(0, 10), "life": 0.5})
@@ -58,12 +54,7 @@ func _physics_process(delta):
 
 	queue_redraw()
 
-func _drop_bomb():
-	if not bullet_scene: return
-	var bomb = bullet_scene.instantiate()
-	var drop_dir = Vector2(direction * 0.25, 1.0).normalized()
-	bomb.setup(global_position + Vector2(0, 18), drop_dir, 210.0, 2.0, Color(1.0, 0.45, 0.1), false)
-	get_tree().current_scene.add_child(bomb)
+
 
 func take_damage(amount: float):
 	health      -= amount
@@ -78,7 +69,6 @@ func die():
 	enemy_died.emit(self)
 	is_falling = true
 	fall_velocity = Vector2(0, 120)
-	bomb_timer = 999.0
 	# Stop patrol influence
 	speed = 0.0
 	# Minor shake immediately
